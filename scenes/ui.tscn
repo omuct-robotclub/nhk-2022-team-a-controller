@@ -1,0 +1,245 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://thirdparty/joystick/virtual_joystick.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/ui/ui.gd" type="Script" id=2]
+[ext_resource path="res://scenes/launcher_control_panel.tscn" type="PackedScene" id=3]
+[ext_resource path="res://scripts/ui/net_stat_indicator.gd" type="Script" id=4]
+[ext_resource path="res://scripts/ui/launcher_controller.gd" type="Script" id=5]
+[ext_resource path="res://scripts/deploy_button.gd" type="Script" id=6]
+[ext_resource path="res://scripts/control_mode_indicator.gd" type="Script" id=7]
+[ext_resource path="res://scripts/position_indicator.gd" type="Script" id=8]
+
+[sub_resource type="InputEventAction" id=1]
+action = "toggle_deploy"
+
+[sub_resource type="ShortCut" id=2]
+shortcut = SubResource( 1 )
+
+[node name="Ui" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -1.0
+margin_right = 1.0
+margin_bottom = -1.0
+mouse_filter = 2
+script = ExtResource( 2 )
+
+[node name="LeftJoystick" parent="." instance=ExtResource( 1 )]
+margin_left = 30.0
+margin_top = -230.0
+margin_right = 230.0
+margin_bottom = -30.0
+deadzone_size = 2.0
+joystick_mode = 1
+action_left = "left"
+action_right = "right"
+action_up = "forward"
+action_down = "backward"
+
+[node name="RightJoystick" parent="." instance=ExtResource( 1 )]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -230.0
+margin_top = -230.0
+margin_right = -30.0
+margin_bottom = -30.0
+deadzone_size = 2.0
+joystick_mode = 1
+action_left = "turn_left"
+action_right = "turn_right"
+action_up = "up"
+action_down = "down"
+
+[node name="ConnectionIndicator" type="VBoxContainer" parent="."]
+margin_left = 30.0
+margin_top = 10.0
+margin_right = 180.0
+margin_bottom = 68.0
+mouse_filter = 2
+size_flags_horizontal = 2
+size_flags_vertical = 3
+
+[node name="ConnectionState" type="Label" parent="ConnectionIndicator"]
+unique_name_in_owner = true
+self_modulate = Color( 1, 0, 0, 1 )
+margin_right = 150.0
+margin_bottom = 14.0
+text = "Disconnected"
+
+[node name="HSeparator" type="HSeparator" parent="ConnectionIndicator"]
+margin_top = 18.0
+margin_right = 150.0
+margin_bottom = 22.0
+rect_min_size = Vector2( 150, 0 )
+
+[node name="NetStatIndicator" type="VBoxContainer" parent="ConnectionIndicator"]
+margin_top = 26.0
+margin_right = 150.0
+margin_bottom = 58.0
+script = ExtResource( 4 )
+
+[node name="UploadSpeed" type="Label" parent="ConnectionIndicator/NetStatIndicator"]
+margin_right = 150.0
+margin_bottom = 14.0
+text = "Upload (B/s) : "
+
+[node name="DownloadSpeed" type="Label" parent="ConnectionIndicator/NetStatIndicator"]
+margin_top = 18.0
+margin_right = 150.0
+margin_bottom = 32.0
+text = "Download (B/s) : "
+
+[node name="ControlModeIndicator" type="HBoxContainer" parent="."]
+margin_left = 31.0
+margin_top = 81.0
+margin_right = 188.0
+margin_bottom = 105.0
+mouse_filter = 2
+script = ExtResource( 7 )
+
+[node name="Label" type="Label" parent="ControlModeIndicator"]
+margin_top = 5.0
+margin_right = 94.0
+margin_bottom = 19.0
+text = "Control Mode: "
+
+[node name="Indicator" type="Label" parent="ControlModeIndicator"]
+margin_left = 98.0
+margin_top = 5.0
+margin_right = 157.0
+margin_bottom = 19.0
+text = "Unknown"
+
+[node name="PositionIndicator" type="VBoxContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -105.0
+margin_top = 137.0
+margin_right = -17.0
+margin_bottom = 187.0
+mouse_filter = 2
+script = ExtResource( 8 )
+
+[node name="X" type="HBoxContainer" parent="PositionIndicator"]
+margin_right = 88.0
+margin_bottom = 14.0
+
+[node name="Label" type="Label" parent="PositionIndicator/X"]
+margin_right = 45.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 45, 0 )
+text = "x "
+
+[node name="Indicator" type="Label" parent="PositionIndicator/X"]
+margin_left = 49.0
+margin_right = 88.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "0.0"
+align = 2
+
+[node name="Y" type="HBoxContainer" parent="PositionIndicator"]
+margin_top = 18.0
+margin_right = 88.0
+margin_bottom = 32.0
+
+[node name="Label" type="Label" parent="PositionIndicator/Y"]
+margin_right = 45.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 45, 0 )
+text = "y "
+
+[node name="Indicator" type="Label" parent="PositionIndicator/Y"]
+margin_left = 49.0
+margin_right = 88.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "0.0"
+align = 2
+
+[node name="Theta" type="HBoxContainer" parent="PositionIndicator"]
+margin_top = 36.0
+margin_right = 88.0
+margin_bottom = 50.0
+
+[node name="Label" type="Label" parent="PositionIndicator/Theta"]
+margin_right = 45.0
+margin_bottom = 14.0
+rect_min_size = Vector2( 45, 0 )
+text = "theta"
+
+[node name="Indicator" type="Label" parent="PositionIndicator/Theta"]
+margin_left = 49.0
+margin_right = 88.0
+margin_bottom = 14.0
+size_flags_horizontal = 3
+text = "0.0"
+align = 2
+
+[node name="LauncherController" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -144.0
+script = ExtResource( 5 )
+
+[node name="ExpandButton" type="Button" parent="LauncherController"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -152.0
+margin_bottom = 64.0
+text = "Launchers"
+
+[node name="Launchers" type="HBoxContainer" parent="LauncherController"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -794.0
+margin_bottom = 65.0
+
+[node name="Fire1" type="Button" parent="LauncherController/Launchers"]
+margin_right = 155.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Left"
+
+[node name="Fire2" type="Button" parent="LauncherController/Launchers"]
+margin_left = 159.0
+margin_right = 315.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Center"
+
+[node name="Fire3" type="Button" parent="LauncherController/Launchers"]
+margin_left = 319.0
+margin_right = 474.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Right"
+
+[node name="DeployButton" type="CheckButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -153.0
+margin_top = 65.0
+margin_right = -2.0
+margin_bottom = 129.0
+shortcut = SubResource( 2 )
+text = "Deploy"
+script = ExtResource( 6 )
+
+[node name="AdjustAngleButton" type="CheckButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -161.0
+margin_top = 209.0
+margin_bottom = 249.0
+focus_mode = 0
+enabled_focus_mode = 0
+text = "Adjust Angle"
+
+[node name="LoaderController" parent="." instance=ExtResource( 3 )]
+margin_top = 0.200012

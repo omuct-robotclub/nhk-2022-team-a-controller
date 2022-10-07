@@ -1,0 +1,49 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/visualizers/robot_visualizer.gd" type="Script" id=1]
+[ext_resource path="res://scripts/visualizers/grid.gd" type="Script" id=2]
+[ext_resource path="res://scripts/camera_controller.gd" type="Script" id=3]
+[ext_resource path="res://scripts/visualizers/spot_visualizer.gd" type="Script" id=4]
+[ext_resource path="res://images/robot_icon.svg" type="Texture" id=5]
+[ext_resource path="res://scripts/visualizers/waypoint_visualizer.gd" type="Script" id=6]
+[ext_resource path="res://images/real_map.png" type="Texture" id=7]
+[ext_resource path="res://scripts/angle_adjuster.gd" type="Script" id=8]
+
+[node name="Visualization" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 0, -180 )
+current = true
+zoom = Vector2( 1.2, 1.2 )
+script = ExtResource( 3 )
+
+[node name="MeterScaler" type="Node2D" parent="."]
+scale = Vector2( 100, -100 )
+
+[node name="MapSprite" type="Sprite" parent="MeterScaler"]
+self_modulate = Color( 0.533333, 0.533333, 0.533333, 1 )
+scale = Vector2( 0.01, -0.01 )
+texture = ExtResource( 7 )
+offset = Vector2( 0, -125 )
+
+[node name="Grid" type="Node2D" parent="MeterScaler"]
+script = ExtResource( 2 )
+line_count = 27
+
+[node name="AngleAdjuster" type="Node2D" parent="MeterScaler"]
+script = ExtResource( 8 )
+
+[node name="Robot" type="Node2D" parent="MeterScaler"]
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="MeterScaler/Robot"]
+scale = Vector2( 0.002, 0.002 )
+texture = ExtResource( 5 )
+
+[node name="WaypointVisualizer" type="Node2D" parent="MeterScaler"]
+script = ExtResource( 6 )
+
+[node name="SpotVisualizer" type="Node2D" parent="MeterScaler"]
+script = ExtResource( 4 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="MeterScaler/SpotVisualizer"]

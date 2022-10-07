@@ -1,0 +1,128 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://scripts/ui/bottom_panel_controller.gd" type="Script" id=1]
+[ext_resource path="res://images/expand_button.svg" type="Texture" id=2]
+[ext_resource path="res://scenes/loader_controller.tscn" type="PackedScene" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "ExpandAnim"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:anchor_top")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 1.0, 0.1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:anchor_bottom")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 2.0, 1.0 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Base/ExpandButton:rect_rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, -180.0 ]
+}
+
+[sub_resource type="InputEventAction" id=2]
+action = "toggle_open"
+
+[sub_resource type="ShortCut" id=3]
+shortcut = SubResource( 2 )
+
+[node name="LauncherControlPanel" type="Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 2.0
+margin_top = 0.199997
+script = ExtResource( 1 )
+
+[node name="ExpandAnim" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+anims/ExpandAnim = SubResource( 1 )
+
+[node name="Base" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -30.0
+margin_bottom = -0.200012
+custom_constants/separation = 0
+
+[node name="ExpandButton" type="Button" parent="Base"]
+unique_name_in_owner = true
+margin_left = 312.0
+margin_right = 712.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 400, 0 )
+rect_pivot_offset = Vector2( 200, 12 )
+focus_mode = 0
+size_flags_horizontal = 4
+enabled_focus_mode = 0
+shortcut = SubResource( 3 )
+icon = ExtResource( 2 )
+flat = true
+icon_align = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="Base"]
+unique_name_in_owner = true
+margin_top = 24.0
+margin_right = 1024.0
+margin_bottom = 629.0
+size_flags_vertical = 3
+
+[node name="MarginContainer" type="MarginContainer" parent="Base/PanelContainer"]
+unique_name_in_owner = true
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 598.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Base/PanelContainer/MarginContainer"]
+margin_right = 1010.0
+margin_bottom = 591.0
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="Base/PanelContainer/MarginContainer/HBoxContainer"]
+margin_right = 1010.0
+margin_bottom = 591.0
+size_flags_horizontal = 3
+
+[node name="Left" parent="Base/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
+margin_right = 1010.0
+margin_bottom = 194.0
+loader_name = "Left"
+
+[node name="Center" parent="Base/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
+margin_top = 198.0
+margin_right = 1010.0
+margin_bottom = 392.0
+loader_idx = 1
+loader_name = "Center"
+
+[node name="Right" parent="Base/PanelContainer/MarginContainer/HBoxContainer/VBoxContainer3" instance=ExtResource( 3 )]
+margin_top = 396.0
+margin_right = 1010.0
+margin_bottom = 591.0
+loader_idx = 2
+loader_name = "Right"
+max_ammo = 13
