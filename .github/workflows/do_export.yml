@@ -1,0 +1,84 @@
+# Whenever tag in the form of `v1.0.0` is pushed then run the job
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  export_app:
+    name: Linux Export
+    runs-on: ubuntu-20.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          lfs: true
+          fetch-depth: 0
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v3
+        with:
+          java-version: 1.8
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: get tag from version
+        id: tag_version
+        run: |
+          echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
+
+      - name: export_app
+        id: export
+        # Use latest version (see releases for all versions)
+        uses: firebelley/godot-export@v4.2.0
+        with:
+          # Defining all the required inputs
+          godot_executable_download_url: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_linux_headless.64.zip
+          godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_export_templates.tpz
+          relative_project_path: ./
+          archive_output: true
+
+        # This release action has worked well for me. However, you can most likely use any release action of your choosing.
+        # https://github.com/softprops/action-gh-release
+      - name: create release
+        uses: softprops/action-gh-release@v0.1.14
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          generate_release_notes: true
+          tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
+          files: ${{ steps.export.outputs.archive_directory }}/*
+  # job id, can be anything
+  # do_export:
+  #   # Always use ubuntu-latest for this action
+  #   runs-on: ubuntu-latest
+  #   # Job name, can be anything
+  #   name: Export
+  #   steps:
+  #     # Always include the checkout step so that
+  #     # your project is available for Godot to export
+  #   - name: checkout
+  #     uses: actions/checkout@v2.3.1
+  #     # Ensure that you get the entire project history
+  #     with:
+  #       fetch-depth: 0
+  #     # separate step to extract the version from the tag name
+  #   - name: get tag from version
+  #     id: tag_version
+  #     run: |
+  #       echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
+  #   - name: export game
+  #     # Use latest version (see releases for all versions)
+  #     uses: firebelley/godot-export@v2.5.0
+  #     with:
+  #       # Defining all the required inputs
+  #       # I used the mono version of Godot in this example
+  #       godot_executable_download_url: https://downloads.tuxfamily.org/godotengine/3.2.2/mono/Godot_v3.2.2-stable_mono_linux_headless_64.zip
+  #       godot_export_templates_download_url: https://downloads.tuxfamily.org/godotengine/3.2.2/mono/Godot_v3.2.2-stable_mono_export_templates.tpz
+  #       relative_project_path: ./
+  #       create_release: true
+  #       base_version:  ${{ steps.tag_version.outputs.TAG_VERSION}}
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
