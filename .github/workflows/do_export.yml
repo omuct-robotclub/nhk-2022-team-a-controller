@@ -9,6 +9,8 @@ jobs:
   export_app:
     name: Linux Export
     runs-on: ubuntu-20.04
+    environment:
+      name: action_secrets
 
     steps:
       - name: Checkout
@@ -30,6 +32,12 @@ jobs:
         id: tag_version
         run: |
           echo ::set-output name=TAG_VERSION::${GITHUB_REF#refs/tags/v}
+      
+      - name: create keystore file
+        id: create_keystore_file
+        run: |
+          echo ${{ secrets.DEBUG_KEYSTORE_BASE64 }} | base64 --decode > /root/debug.keystore
+          sed 's@keystore/release=".*"@keystore/release="'/root/debug.keystore'"@g' -i export_presets.cfg
 
       - name: export_app
         id: export
