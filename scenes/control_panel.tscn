@@ -57,9 +57,9 @@ anims/OpenAnim = SubResource( 1 )
 unique_name_in_owner = true
 anchor_left = 0.5
 anchor_right = 0.5
-margin_left = -64.0
-margin_top = -32.0
-margin_right = 64.0
+margin_left = -192.0
+margin_top = -64.0
+margin_right = 192.0
 focus_mode = 0
 size_flags_horizontal = 4
 enabled_focus_mode = 0
@@ -96,7 +96,7 @@ size_flags_stretch_ratio = 0.07
 
 [node name="Tabs" type="HBoxContainer" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer"]
 unique_name_in_owner = true
-margin_right = 938.0
+margin_right = 884.0
 margin_bottom = 39.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
@@ -120,13 +120,12 @@ text = "Some Controller"
 
 [node name="CloseButton" type="TextureButton" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 942.0
+margin_left = 888.0
 margin_right = 1024.0
 margin_bottom = 39.0
-rect_min_size = Vector2( 50, 30 )
 focus_mode = 0
 size_flags_horizontal = 11
-size_flags_stretch_ratio = 0.25
+size_flags_stretch_ratio = 0.44
 enabled_focus_mode = 0
 texture_normal = ExtResource( 2 )
 expand = true

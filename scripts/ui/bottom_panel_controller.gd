@@ -28,9 +28,9 @@ func _ready():
     var margin_container := $"%MarginContainer"
 
     margin_container.margin_left = safe_area.position.x * x_scale
-    margin_container.margin_right = (window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
+    margin_container.margin_right = -(window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
     margin_container.margin_top = safe_area.position.y * y_scale
-    margin_container.margin_bottom = (window_size.y - (safe_area.position.y + safe_area.size.y)) * y_scale
+    margin_container.margin_bottom = -(window_size.y - (safe_area.position.y + safe_area.size.y)) * y_scale
 
     assert(err == OK)
 

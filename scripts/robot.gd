@@ -50,11 +50,13 @@ class Loader:
     var _robot: Robot
     var _idx: int
 
+    var _auto_reload: bool
     var _is_ready: bool
     var _ammo_left: int
     var _chamber_state: bool
     var _reload_progress: float
 
+    var auto_reload: bool setget set_auto_reload
     var is_ready: bool setget ,get_is_ready
     var ammo_left: int setget set_ammo_left, get_ammo_left
     var chamber_state: bool setget set_chamber_state, get_chamber_state
@@ -74,6 +76,8 @@ class Loader:
     func get_chamber_state() -> bool: return _chamber_state
     func get_reload_progress() -> float: return _reload_progress
 
+    func set_auto_reload(v: bool) -> void:
+        rosbridge.set_parameter("nhka_hardware_node", "loader" + str(_idx) + ".auto_reload", v)
     func set_ammo_left(n: int) -> void:
         _robot._notify_reload_client.call_service({
             "loader_idx": _idx,
@@ -187,11 +191,12 @@ func set_velocity(linear: Vector2, angular: float) -> void:
     _twist_pub.publish(msg)
 
 func _on_param_changed(name: String, value) -> void:
-    if name == "enable_control":
-        var prev := control_mode
-        if value:
-            control_mode = ControlMode.AUTO
-        else:
-            control_mode = ControlMode.MANUAL
-        if prev != control_mode:
-            emit_signal("control_mode_changed", control_mode)
+    match name:
+        "enable_control":
+            var prev := control_mode
+            if value:
+                control_mode = ControlMode.AUTO
+            else:
+                control_mode = ControlMode.MANUAL
+            if prev != control_mode:
+                emit_signal("control_mode_changed", control_mode)

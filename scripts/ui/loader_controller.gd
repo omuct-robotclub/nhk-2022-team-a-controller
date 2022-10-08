@@ -7,9 +7,9 @@ export var loader_name: String setget set_loader_name
 export var max_ammo: int setget set_max_ammo
 export var reload_progress_color: Gradient
 
-var _loader_state_sub: rosbridge.Subscription
-var _notify_reload_cli: rosbridge.Client
-var _reload_cli: rosbridge.Client
+onready var _loader_state_sub := rosbridge.create_subscription("launcher_interfaces/LoaderStateArray", "/loader_state", funcref(self, "_loader_state_cb"))
+onready var _notify_reload_cli :=  rosbridge.create_client("/notify_reloaded")
+onready var _reload_cli := rosbridge.create_client("/reload")
 
 onready var _ammo_indicator := $"%AmmoIndicator"
 onready var _auto_reload := $"%AutoReload"
@@ -19,8 +19,7 @@ onready var _status := $"%Status"
 
 func _ready():
     _ammo_indicator.value = max_ammo
-    var err := rosbridge.connect("connection_established", self, "_on_connection_established")
-    err = err || _ammo_indicator.connect("submit", self, "_on_ammo_indicator_submit")
+    var err := _ammo_indicator.connect("submit", self, "_on_ammo_indicator_submit")
     err = err || _auto_reload.connect("pressed", self, "_on_auto_reload_pressed")
     err = err || _reload_button.connect("pressed", self, "_on_reload_button_pressed")
     assert(err == OK)
@@ -34,11 +33,6 @@ func set_max_ammo(v: int):
     if _ammo_indicator != null:
         _ammo_indicator.max_value = v
     max_ammo = v
-
-func _on_connection_established():
-    _loader_state_sub = rosbridge.create_subscription("launcher_interfaces/LoaderStateArray", "/loader_state", funcref(self, "_loader_state_cb"))
-    _notify_reload_cli = rosbridge.create_client("/notify_reloaded")
-    _reload_cli = rosbridge.create_client("/reload")
 
 const state_text := [
     ["READY", Color(0.0, 1.0, 0.0)],
@@ -67,7 +61,7 @@ func _on_ammo_indicator_submit(n_ammo: int):
     })
 
 func _on_auto_reload_pressed():
-    rosbridge.set_parameter("nhka_hardware_node", "loader" + str(loader_idx) + ".auto_reload", $"%AutoReload".pressed)
+    robot.get_loader(loader_idx).auto_reload = _reload_button.pressed
 
 func _on_reload_button_pressed():
     if _reload_cli != null:
