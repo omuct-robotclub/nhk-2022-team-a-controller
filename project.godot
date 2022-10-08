@@ -42,7 +42,7 @@ _global_script_classes=[ {
 "base": "Container",
 "class": "ScrollTabContainer",
 "language": "GDScript",
-"path": "res://scripts/scroll_tab_container.gd"
+"path": "res://scripts/ui/scroll_tab_container.gd"
 }, {
 "base": "Sprite",
 "class": "Spot",

@@ -3,11 +3,11 @@
 [ext_resource path="res://thirdparty/joystick/virtual_joystick.tscn" type="PackedScene" id=1]
 [ext_resource path="res://scripts/ui/ui.gd" type="Script" id=2]
 [ext_resource path="res://scenes/control_panel.tscn" type="PackedScene" id=3]
-[ext_resource path="res://scripts/ui/net_stat_indicator.gd" type="Script" id=4]
+[ext_resource path="res://scenes/connection_indicator.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scripts/ui/launcher_controller.gd" type="Script" id=5]
-[ext_resource path="res://scripts/deploy_button.gd" type="Script" id=6]
-[ext_resource path="res://scripts/control_mode_indicator.gd" type="Script" id=7]
-[ext_resource path="res://scripts/position_indicator.gd" type="Script" id=8]
+[ext_resource path="res://scripts/ui/deploy_button.gd" type="Script" id=6]
+[ext_resource path="res://scripts/ui/control_mode_indicator.gd" type="Script" id=7]
+[ext_resource path="res://scripts/ui/position_indicator.gd" type="Script" id=8]
 
 [sub_resource type="InputEventAction" id=1]
 action = "toggle_deploy"
@@ -53,44 +53,7 @@ action_right = "turn_right"
 action_up = "up"
 action_down = "down"
 
-[node name="ConnectionIndicator" type="VBoxContainer" parent="."]
-margin_left = 30.0
-margin_top = 2.0
-margin_right = 180.0
-margin_bottom = 60.0
-mouse_filter = 2
-size_flags_horizontal = 2
-size_flags_vertical = 3
-
-[node name="ConnectionState" type="Label" parent="ConnectionIndicator"]
-unique_name_in_owner = true
-self_modulate = Color( 1, 0, 0, 1 )
-margin_right = 150.0
-margin_bottom = 14.0
-text = "Disconnected"
-
-[node name="HSeparator" type="HSeparator" parent="ConnectionIndicator"]
-margin_top = 18.0
-margin_right = 150.0
-margin_bottom = 22.0
-rect_min_size = Vector2( 150, 0 )
-
-[node name="NetStatIndicator" type="VBoxContainer" parent="ConnectionIndicator"]
-margin_top = 26.0
-margin_right = 150.0
-margin_bottom = 58.0
-script = ExtResource( 4 )
-
-[node name="UploadSpeed" type="Label" parent="ConnectionIndicator/NetStatIndicator"]
-margin_right = 150.0
-margin_bottom = 14.0
-text = "Upload (B/s) : "
-
-[node name="DownloadSpeed" type="Label" parent="ConnectionIndicator/NetStatIndicator"]
-margin_top = 18.0
-margin_right = 150.0
-margin_bottom = 32.0
-text = "Download (B/s) : "
+[node name="ConnectionIndicator" parent="." instance=ExtResource( 4 )]
 
 [node name="ControlModeIndicator" type="HBoxContainer" parent="."]
 margin_left = 31.0
