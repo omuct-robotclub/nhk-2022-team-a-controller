@@ -53,7 +53,7 @@ jobs:
           godot_executable_download_url: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_linux_headless.64.zip
           godot_export_templates_download_url: https://github.com/godotengine/godot/releases/download/3.5.1-stable/Godot_v3.5.1-stable_export_templates.tpz
           relative_project_path: ./
-          archive_output: true
+          archive_output: false
 
         # This release action has worked well for me. However, you can most likely use any release action of your choosing.
         # https://github.com/softprops/action-gh-release
