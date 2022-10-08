@@ -4,6 +4,7 @@ class_name ScrollTabContainer
 
 export var current_tab := 0 setget set_current_tab
 export var transition_speed := 0.1
+export var separation := 1.0
 
 var _current_tab := float(current_tab)
 var _tween: SceneTreeTween
@@ -29,7 +30,7 @@ func sort_children(t := float(current_tab)) -> void:
     _current_tab = t
 
     for i in children.size():
-        var offset = get_rect().size.x * (i - t)
+        var offset = (get_rect().size.x + separation) * (i - t)
         var c := children[i] as Control
         c.rect_rotation = 0
         c.rect_position.x = offset

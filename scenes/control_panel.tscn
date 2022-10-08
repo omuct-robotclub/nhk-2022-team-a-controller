@@ -66,36 +66,42 @@ texture_normal = ExtResource( 2 )
 expand = true
 stretch_mode = 3
 
-[node name="PanelContainer" type="PanelContainer" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 20.0
+margin_top = 7.0
+margin_right = 1004.0
+margin_bottom = 593.0
 
-[node name="TabControlPanel" type="VBoxContainer" parent="PanelContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer"]
+margin_right = 984.0
+margin_bottom = 586.0
+
+[node name="TabControlPanel" type="VBoxContainer" parent="MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 margin_left = 7.0
 margin_top = 7.0
-margin_right = 1017.0
-margin_bottom = 593.0
+margin_right = 977.0
+margin_bottom = 579.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_constants/separation = 0
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/TabControlPanel"]
-margin_right = 1010.0
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/PanelContainer/TabControlPanel"]
+margin_right = 970.0
 margin_bottom = 30.0
 custom_styles/panel = SubResource( 4 )
 
-[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/TabControlPanel/PanelContainer"]
-margin_right = 1010.0
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/TabControlPanel/PanelContainer"]
+margin_right = 970.0
 margin_bottom = 30.0
 
-[node name="Tabs" type="HBoxContainer" parent="PanelContainer/TabControlPanel/PanelContainer/HBoxContainer"]
+[node name="Tabs" type="HBoxContainer" parent="MarginContainer/PanelContainer/TabControlPanel/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
 margin_right = 237.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 0, 30 )
 
-[node name="Button" type="Button" parent="PanelContainer/TabControlPanel/PanelContainer/HBoxContainer/Tabs"]
+[node name="Button" type="Button" parent="MarginContainer/PanelContainer/TabControlPanel/PanelContainer/HBoxContainer/Tabs"]
 margin_right = 118.0
 margin_bottom = 30.0
 focus_mode = 0
@@ -103,7 +109,7 @@ enabled_focus_mode = 0
 text = "LoaderController"
 flat = true
 
-[node name="Button2" type="Button" parent="PanelContainer/TabControlPanel/PanelContainer/HBoxContainer/Tabs"]
+[node name="Button2" type="Button" parent="MarginContainer/PanelContainer/TabControlPanel/PanelContainer/HBoxContainer/Tabs"]
 margin_left = 122.0
 margin_right = 237.0
 margin_bottom = 30.0
@@ -111,10 +117,10 @@ focus_mode = 0
 enabled_focus_mode = 0
 text = "Some Controller"
 
-[node name="CloseButton" type="TextureButton" parent="PanelContainer/TabControlPanel/PanelContainer/HBoxContainer"]
+[node name="CloseButton" type="TextureButton" parent="MarginContainer/PanelContainer/TabControlPanel/PanelContainer/HBoxContainer"]
 unique_name_in_owner = true
-margin_left = 960.0
-margin_right = 1010.0
+margin_left = 920.0
+margin_right = 970.0
 margin_bottom = 30.0
 rect_min_size = Vector2( 50, 30 )
 focus_mode = 0
@@ -125,28 +131,29 @@ expand = true
 stretch_mode = 3
 flip_v = true
 
-[node name="ScrollTabContainer" type="Container" parent="PanelContainer/TabControlPanel"]
+[node name="ScrollTabContainer" type="Container" parent="MarginContainer/PanelContainer/TabControlPanel"]
 unique_name_in_owner = true
 margin_top = 30.0
-margin_right = 1010.0
-margin_bottom = 586.0
+margin_right = 970.0
+margin_bottom = 572.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 4 )
 transition_speed = 0.2
+separation = 50.0
 
-[node name="LoaderControlPanel" parent="PanelContainer/TabControlPanel/ScrollTabContainer" instance=ExtResource( 3 )]
+[node name="LoaderControlPanel" parent="MarginContainer/PanelContainer/TabControlPanel/ScrollTabContainer" instance=ExtResource( 3 )]
 margin_left = 0.0
 margin_top = 0.0
-margin_right = 1010.0
-margin_bottom = 556.0
+margin_right = 970.0
+margin_bottom = 542.0
 
-[node name="Panel2" type="Panel" parent="PanelContainer/TabControlPanel/ScrollTabContainer"]
-margin_left = 1010.0
-margin_right = 2020.0
-margin_bottom = 556.0
+[node name="Panel" type="Panel" parent="MarginContainer/PanelContainer/TabControlPanel/ScrollTabContainer"]
+margin_left = 1020.0
+margin_right = 1990.0
+margin_bottom = 542.0
 
-[node name="Panel" type="Panel" parent="PanelContainer/TabControlPanel/ScrollTabContainer"]
-margin_left = 2020.0
-margin_right = 3030.0
-margin_bottom = 556.0
+[node name="Panel2" type="Panel" parent="MarginContainer/PanelContainer/TabControlPanel/ScrollTabContainer"]
+margin_left = 2040.0
+margin_right = 3010.0
+margin_bottom = 542.0
