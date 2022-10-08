@@ -18,9 +18,6 @@ func _ready():
     for i in _tabs.get_child_count():
         _tabs.get_child(i).connect("pressed", self, "_on_tab_pressed", [i])
 
-    print(OS.get_window_safe_area())
-    print(get_viewport_rect())
-
     var window_size := OS.get_real_window_size()
     var safe_area := OS.get_window_safe_area()
     var viewport_rect := get_viewport_rect()
@@ -32,10 +29,6 @@ func _ready():
 
     margin_container.margin_left = safe_area.position.x * x_scale
     margin_container.margin_right = (window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
-
-    print(margin_container.margin_right)
-
-    print(x_scale, " ", y_scale)
 
     assert(err == OK)
 
