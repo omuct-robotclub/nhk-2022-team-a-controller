@@ -64,7 +64,8 @@ func _create_popup(position: Vector2, spot_idx: int) -> void:
     menu.rect_scale *= 2.0
     for launcher in compatible_launchers:
         menu.add_item(launcher["name"])
-    menu.connect("index_pressed", self, "_on_menu_index_pressed", [spot, compatible_launchers, menu])
+    var err := menu.connect("index_pressed", self, "_on_menu_index_pressed", [spot, compatible_launchers, menu])
+    assert(err == OK)
 
     $CanvasLayer.add_child(menu)
     menu.set_global_position(position)
@@ -75,7 +76,8 @@ func _on_menu_index_pressed(index: int, spot, compatible_launchers, menu) -> voi
 
     var launcher = compatible_launchers[index]
     var sel := LaunchPositionSelector.new(launcher, spot)
-    sel.connect("launch_position_selected", self, "_on_launch_position_selected")
+    var err := sel.connect("launch_position_selected", self, "_on_launch_position_selected")
+    assert(err == OK)
     add_child(sel)
 
 func _on_launch_position_selected(pos: Vector2, angle: float) -> void:

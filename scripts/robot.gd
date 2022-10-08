@@ -44,6 +44,7 @@ class Launcher:
 
 
 class Loader:
+# warning-ignore:unused_signal
     signal state_changed()
 
     var _robot: Robot

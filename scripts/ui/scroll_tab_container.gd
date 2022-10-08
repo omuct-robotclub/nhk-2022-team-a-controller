@@ -39,7 +39,7 @@ func sort_children(t := float(current_tab)) -> void:
         c.rect_scale = Vector2.ONE
 
 func set_current_tab(i: int) -> void:
-    current_tab = clamp(i, 0, get_control_children().size() - 1)
+    current_tab = int(clamp(i, 0, get_control_children().size() - 1))
 
     var transition_time := transition_speed * abs(current_tab - _current_tab)
 
@@ -48,7 +48,7 @@ func set_current_tab(i: int) -> void:
         _tween = null
 
     _tween = get_tree().create_tween()
-    _tween.tween_method(self, "sort_children", _current_tab, float(current_tab), transition_time) \
+    var _method_tweener := _tween.tween_method(self, "sort_children", _current_tab, float(current_tab), transition_time) \
         .set_ease(Tween.EASE_OUT) \
         .set_trans(Tween.TRANS_CUBIC)
 

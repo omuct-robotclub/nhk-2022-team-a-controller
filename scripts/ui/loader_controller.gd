@@ -11,22 +11,28 @@ var _loader_state_sub: rosbridge.Subscription
 var _notify_reload_cli: rosbridge.Client
 var _reload_cli: rosbridge.Client
 
+onready var _ammo_indicator := $"%AmmoIndicator"
+onready var _auto_reload := $"%AutoReload"
+onready var _reload_button := $"%ReloadButton"
+onready var _name := $"%Name"
+onready var _status := $"%Status"
+
 func _ready():
-    $"%AmmoIndicator".value = max_ammo
+    _ammo_indicator.value = max_ammo
     var err := rosbridge.connect("connection_established", self, "_on_connection_established")
-    err = err || $"%AmmoIndicator".connect("submit", self, "_on_ammo_indicator_submit")
-    err = err || $"%AutoReload".connect("pressed", self, "_on_auto_reload_pressed")
-    err = err || $"%ReloadButton".connect("pressed", self, "_on_reload_button_pressed")
+    err = err || _ammo_indicator.connect("submit", self, "_on_ammo_indicator_submit")
+    err = err || _auto_reload.connect("pressed", self, "_on_auto_reload_pressed")
+    err = err || _reload_button.connect("pressed", self, "_on_reload_button_pressed")
     assert(err == OK)
 
 func set_loader_name(name: String):
     loader_name = name
-    if $"%Name" != null:
-        $"%Name".text = name
+    if _name != null:
+        _name.text = name
 
 func set_max_ammo(v: int):
-    if $"%AmmoIndicator" != null:
-        $"%AmmoIndicator".max_value = v
+    if _ammo_indicator != null:
+        _ammo_indicator.max_value = v
     max_ammo = v
 
 func _on_connection_established():
@@ -46,10 +52,10 @@ func _loader_state_cb(msg: Dictionary):
     var chamber_state: bool = msg["loader_states"][loader_idx]["chamber_state"]
     var reload_progress: float = msg["loader_states"][loader_idx]["reload_progress"]
 
-    $"%Status".text = "READY" if is_ready else "RELOADING: %3d%%" % (reload_progress * 100)
-    $"%Status".self_modulate = Color.green if is_ready else reload_progress_color.interpolate(reload_progress)
-    $"%AmmoIndicator".value = ammo_left
-    $"%AmmoIndicator".chamber_state = chamber_state
+    _status.text = "READY" if is_ready else "RELOADING: %3d%%" % (reload_progress * 100)
+    _status.self_modulate = Color.green if is_ready else reload_progress_color.interpolate(reload_progress)
+    _ammo_indicator.value = ammo_left
+    _ammo_indicator.chamber_state = chamber_state
 
 func _on_ammo_indicator_submit(n_ammo: int):
     if _notify_reload_cli == null: return

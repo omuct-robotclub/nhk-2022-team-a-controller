@@ -13,10 +13,10 @@ var _is_opened = false
 
 func _ready():
     var err := _open_button.connect("pressed", self, "_open")
-    err = err | _close_button.connect("pressed", self, "_close")
+    err = err || _close_button.connect("pressed", self, "_close")
 
     for i in _tabs.get_child_count():
-        _tabs.get_child(i).connect("pressed", self, "_on_tab_pressed", [i])
+        err = err || _tabs.get_child(i).connect("pressed", self, "_on_tab_pressed", [i])
 
     var window_size := OS.get_real_window_size()
     var safe_area := OS.get_window_safe_area()
@@ -29,6 +29,8 @@ func _ready():
 
     margin_container.margin_left = safe_area.position.x * x_scale
     margin_container.margin_right = (window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
+    margin_container.margin_top = safe_area.position.y * y_scale
+    margin_container.margin_bottom = (window_size.y - (safe_area.position.y + safe_area.size.y)) * y_scale
 
     assert(err == OK)
 

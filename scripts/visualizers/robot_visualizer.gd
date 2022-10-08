@@ -32,7 +32,7 @@ func _pose_callback(msg: Dictionary) -> void:
 func _on_timer_timeout() -> void:
     $Sprite.self_modulate = timeout_color
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
     update()
 
 func _draw() -> void:

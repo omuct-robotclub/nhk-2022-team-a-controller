@@ -2,7 +2,7 @@ extends Node
 
 export var linear_deadzone := 0.01
 export var angular_deadzone := 0.01
-export var twist_publish_rate := 30
+export var twist_publish_rate := 30.0
 onready var _last_twist_publish_time := OS.get_ticks_msec()
 
 func _ready() -> void:
@@ -18,7 +18,7 @@ func _process(_delta: float) -> void:
         robot.set_velocity(linear, angular)
         _last_twist_publish_time = now
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("step_turn_left"):
         robot.move_to(robot.position, robot.rotation - deg2rad(0.5))
     if Input.is_action_just_pressed("step_turn_right"):
