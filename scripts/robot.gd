@@ -28,9 +28,10 @@ var _loaders: Array
 var position: Vector2 setget ,get_position
 var rotation: float setget, get_rotation
 var control_mode: int = ControlMode.MANUAL setget ,get_control_mode
-var _param_event_handler := rosbridge.create_parameter_event_handler("/rud_controller_node", funcref(self, "_on_param_changed"))
+var _rud_param_event_handler := rosbridge.create_parameter_event_handler("/rud_controller_node", funcref(self, "_on_rud_param_changed"))
+var _param_event_handler := rosbridge.create_parameter_event_handler("/nhka_hardware_node", funcref(self, "_on_param_changed"))
 
-class Launcher:
+class Launcher extends Reference:
     var _robot: Robot
     var _idx: int
 
@@ -43,20 +44,20 @@ class Launcher:
         print(result)
 
 
-class Loader:
+class Loader extends Reference:
 # warning-ignore:unused_signal
     signal state_changed()
 
     var _robot: Robot
     var _idx: int
 
-    var _auto_reload: bool
+    var _auto_reload: RosBridge.Parameter
     var _is_ready: bool
     var _ammo_left: int
     var _chamber_state: bool
     var _reload_progress: float
 
-    var auto_reload: bool setget set_auto_reload
+    var auto_reload: bool setget set_auto_reload, get_auto_reload
     var is_ready: bool setget ,get_is_ready
     var ammo_left: int setget set_ammo_left, get_ammo_left
     var chamber_state: bool setget set_chamber_state, get_chamber_state
@@ -65,19 +66,20 @@ class Loader:
     func _init(robo: Robot, idx: int) -> void:
         _idx = idx
         _robot = robo
+        _auto_reload = rosbridge.create_parameter_wrapper("/nhka_hardware_node", "loader" + str(_idx) + ".auto_reload", false)
 
     func reload() -> void:
         _robot._reload_client.call_service({
             "loader_idx": _idx
         })
 
+    func get_auto_reload() -> bool: return _auto_reload.get_value()
     func get_is_ready() -> bool: return _is_ready
     func get_ammo_left() -> int: return _ammo_left
     func get_chamber_state() -> bool: return _chamber_state
     func get_reload_progress() -> float: return _reload_progress
 
-    func set_auto_reload(v: bool) -> void:
-        rosbridge.set_parameter("nhka_hardware_node", "loader" + str(_idx) + ".auto_reload", v)
+    func set_auto_reload(v: bool) -> void: _auto_reload.set_value(v)
     func set_ammo_left(n: int) -> void:
         _robot._notify_reload_client.call_service({
             "loader_idx": _idx,
@@ -190,7 +192,7 @@ func set_velocity(linear: Vector2, angular: float) -> void:
     }
     _twist_pub.publish(msg)
 
-func _on_param_changed(name: String, value) -> void:
+func _on_rud_param_changed(name: String, value) -> void:
     match name:
         "enable_control":
             var prev := control_mode

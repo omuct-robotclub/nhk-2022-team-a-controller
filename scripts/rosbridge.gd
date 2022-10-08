@@ -141,9 +141,9 @@ func _unsubscribe(id: String, topic: String):
 func _call_service(id: String, service: String, args):
     var content = { "op": "call_service", "service": service, "id": id,  "args": args}
     _send(content)
+    print(content)
     while true:
         var res = yield(self, "service_response")
-#		print("res: ", res)
         if res[0] == id:
             return res[1]
 
@@ -233,7 +233,7 @@ func set_parameter(node_name: String, param_name: String, value):
     }), "completed")
 
 func get_parameter(node_name: String, param_name: String):
-    var cli = create_client(node_name + "/set_parameters")
+    var cli = create_client(node_name + "/get_parameters")
 
     var resp = yield(cli.call_service({
         "names": [param_name],
@@ -245,7 +245,7 @@ func get_parameter(node_name: String, param_name: String):
 
     var p = resp["values"][0]
 
-    var field_name = param_type_to_type_lut[p["type"]]
+    var field_name = param_type_to_type_lut[int(p["type"])]
 
     return p[field_name]
 
@@ -258,7 +258,8 @@ func _param_event_callback(msg: Dictionary) -> void:
     if not _param_event_callbacks.has(node_name): return
     for id in _param_event_callbacks[node_name]:
         for p in msg["changed_parameters"]:
-            _param_event_callbacks[node_name][id].call_func(p["name"], p["value"][param_type_to_type_lut[int(p["value"]["type"])]])
+            if _param_event_callbacks[node_name][id].is_valid():
+                _param_event_callbacks[node_name][id].call_func(p["name"], p["value"][param_type_to_type_lut[int(p["value"]["type"])]])
 
 func _register_param_event_callback(cb: FuncRef, node_name: String) -> String:
     var id = _get_serial_id()
@@ -287,3 +288,42 @@ class ParameterEventHandler extends Reference:
 
 func create_parameter_event_handler(node_name: String, callback: FuncRef) -> ParameterEventHandler:
     return ParameterEventHandler.new(self, _register_param_event_callback(callback, node_name), node_name)
+
+
+class Parameter extends Reference:
+    signal value_updated(new_value)
+
+    var _br: RosBridge
+    var _node_name: String
+    var _param_name: String
+    var _value = null
+    var _param_event_handler: RosBridge.ParameterEventHandler
+
+    func _init(br: RosBridge, node_name: String, param_name: String, default) -> void:
+        _br = br
+        _node_name = node_name
+        _param_name = param_name
+        _value = default
+        var err := _br.connect("connection_established", self, "_on_connection_established")
+        assert(err == OK)
+        _on_connection_established()
+        _param_event_handler = _br.create_parameter_event_handler(_node_name, funcref(self, "_on_param_changed"))
+
+    func _on_connection_established() -> void:
+        _value = yield(_br.get_parameter(_node_name, _param_name), "completed")
+        emit_signal("value_updated", _value)
+
+    func _on_param_changed(name: String, value) -> void:
+        if name == _param_name:
+            _value = value
+            emit_signal("value_updated", _value)
+
+    func get_value():
+        return _value
+
+    func set_value(value):
+        _br.set_parameter(_node_name, _param_name, value)
+
+func create_parameter_wrapper(node_name: String, param_name: String, default) -> Parameter:
+    var result := Parameter.new(self, node_name, param_name, default)
+    return result

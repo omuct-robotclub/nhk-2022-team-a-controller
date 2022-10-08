@@ -18,19 +18,22 @@ func _ready():
     for i in _tabs.get_child_count():
         err = err || _tabs.get_child(i).connect("pressed", self, "_on_tab_pressed", [i])
 
-    var window_size := OS.get_real_window_size()
-    var safe_area := OS.get_window_safe_area()
-    var viewport_rect := get_viewport_rect()
+    if OS.get_name() == "Android" or OS.get_name() == "iOS":
+        var window_size := OS.get_real_window_size()
+        var safe_area := OS.get_window_safe_area()
+        var viewport_rect := get_viewport_rect()
 
-    var x_scale := viewport_rect.size.x / window_size.x
-    var y_scale := viewport_rect.size.y / window_size.y
+        var x_scale := viewport_rect.size.x / window_size.x
+        var y_scale := viewport_rect.size.y / window_size.y
 
-    var margin_container := $"%MarginContainer"
+        var margin_container := $"%MarginContainer"
+        print((safe_area.position.x + safe_area.size.x))
+        print(-(window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale)
 
-    margin_container.margin_left = safe_area.position.x * x_scale
-    margin_container.margin_right = -(window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
-    margin_container.margin_top = safe_area.position.y * y_scale
-    margin_container.margin_bottom = -(window_size.y - (safe_area.position.y + safe_area.size.y)) * y_scale
+        margin_container.margin_left = safe_area.position.x * x_scale
+        margin_container.margin_right = -(window_size.x - (safe_area.position.x + safe_area.size.x)) * x_scale
+        margin_container.margin_top = safe_area.position.y * y_scale
+        margin_container.margin_bottom = -(window_size.y - (safe_area.position.y + safe_area.size.y)) * y_scale
 
     assert(err == OK)
 

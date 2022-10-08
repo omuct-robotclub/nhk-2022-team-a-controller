@@ -90,21 +90,21 @@ custom_constants/separation = 0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/MarginContainer/TabControlPanel"]
 margin_right = 1024.0
-margin_bottom = 39.0
+margin_bottom = 49.0
 size_flags_vertical = 3
-size_flags_stretch_ratio = 0.07
+size_flags_stretch_ratio = 0.09
 
 [node name="Tabs" type="HBoxContainer" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer"]
 unique_name_in_owner = true
 margin_right = 884.0
-margin_bottom = 39.0
+margin_bottom = 49.0
 rect_min_size = Vector2( 0, 30 )
 size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.87
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer/Tabs"]
 margin_right = 118.0
-margin_bottom = 39.0
+margin_bottom = 49.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "LoaderController"
@@ -113,7 +113,7 @@ flat = true
 [node name="Button2" type="Button" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer/Tabs"]
 margin_left = 122.0
 margin_right = 237.0
-margin_bottom = 39.0
+margin_bottom = 49.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Some Controller"
@@ -122,7 +122,7 @@ text = "Some Controller"
 unique_name_in_owner = true
 margin_left = 888.0
 margin_right = 1024.0
-margin_bottom = 39.0
+margin_bottom = 49.0
 focus_mode = 0
 size_flags_horizontal = 11
 size_flags_stretch_ratio = 0.44
@@ -134,27 +134,27 @@ flip_v = true
 
 [node name="ScrollTabContainer" type="Container" parent="PanelContainer/MarginContainer/TabControlPanel"]
 unique_name_in_owner = true
-margin_top = 39.0
+margin_top = 49.0
 margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 4 )
 transition_speed = 0.2
-separation = 50.0
+separation = 100.0
 
 [node name="LoaderControlPanel" parent="PanelContainer/MarginContainer/TabControlPanel/ScrollTabContainer" instance=ExtResource( 3 )]
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 1024.0
-margin_bottom = 561.0
+margin_bottom = 551.0
 
 [node name="Panel" type="Panel" parent="PanelContainer/MarginContainer/TabControlPanel/ScrollTabContainer"]
 margin_left = 1074.0
 margin_right = 2098.0
-margin_bottom = 561.0
+margin_bottom = 551.0
 
 [node name="Panel2" type="Panel" parent="PanelContainer/MarginContainer/TabControlPanel/ScrollTabContainer"]
 margin_left = 2148.0
 margin_right = 3172.0
-margin_bottom = 561.0
+margin_bottom = 551.0

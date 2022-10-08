@@ -22,7 +22,14 @@ func _ready():
     var err := _ammo_indicator.connect("submit", self, "_on_ammo_indicator_submit")
     err = err || _auto_reload.connect("pressed", self, "_on_auto_reload_pressed")
     err = err || _reload_button.connect("pressed", self, "_on_reload_button_pressed")
+    var tim := Timer.new()
+    err = err || tim.connect("timeout", self, "_update_auto_reload")
+    tim.wait_time = 1.0
+    tim.one_shot = false
+    tim.autostart = true
+    add_child(tim)
     assert(err == OK)
+
 
 func set_loader_name(name: String):
     loader_name = name
@@ -61,7 +68,10 @@ func _on_ammo_indicator_submit(n_ammo: int):
     })
 
 func _on_auto_reload_pressed():
-    robot.get_loader(loader_idx).auto_reload = _reload_button.pressed
+    robot.get_loader(loader_idx).auto_reload = _auto_reload.pressed
+
+func _update_auto_reload() -> void:
+    _auto_reload.pressed = robot.get_loader(loader_idx).auto_reload
 
 func _on_reload_button_pressed():
     if _reload_cli != null:
