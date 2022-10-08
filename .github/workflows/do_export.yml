@@ -38,6 +38,7 @@ jobs:
         run: |
           echo ${{ secrets.DEBUG_KEYSTORE_BASE64 }} | base64 --decode > /tmp/debug.keystore
           sed 's@keystore/release=".*"@keystore/release="'/tmp/debug.keystore'"@g' -i export_presets.cfg
+          sed 's@keystore/debug=".*"@keystore/debug="'/tmp/debug.keystore'"@g' -i export_presets.cfg
 
       - name: export_app
         id: export
