@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="86.602539mm"
+   height="100mm"
+   viewBox="0 0 86.602539 100"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14, custom)"
+   sodipodi:docname="arrow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="true"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.5946522"
+     inkscape:cx="42.041381"
+     inkscape:cy="195.07201"
+     inkscape:window-width="1920"
+     inkscape:window-height="1028"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-13.39746)">
+    <path
+       sodipodi:type="star"
+       style="fill:#b3b3b3;fill-opacity:1;stroke-width:0.264583"
+       id="path111"
+       inkscape:flatsided="false"
+       sodipodi:sides="3"
+       sodipodi:cx="17.779293"
+       sodipodi:cy="41.269272"
+       sodipodi:r1="44.054493"
+       sodipodi:r2="22.027246"
+       sodipodi:arg1="1.0471976"
+       sodipodi:arg2="2.0943951"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 39.806538,79.421583 6.7656699,60.345427 -26.2752,41.26927 6.7656698,22.193117 39.806541,3.1169629 l -1e-6,38.1523091 z"
+       inkscape:transform-center-x="14.433757"
+       transform="matrix(1.3105366,0,0,1.3105366,47.832071,-4.0848913)"
+       inkscape:transform-center-y="-1.3970293e-06" />
+  </g>
+</svg>

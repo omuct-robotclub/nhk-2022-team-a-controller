@@ -31,14 +31,14 @@ func _ready():
     add_child(_timer)
     _timer.start()
 
-    err = err || $LeftJoystick.connect("pressed", self, "_on_joystick_pressed")
-    err = err || $RightJoystick.connect("pressed", self, "_on_joystick_pressed")
+    err = err || $"%LeftJoystick".connect("pressed", self, "_on_joystick_pressed")
+    err = err || $"%RightJoystick".connect("pressed", self, "_on_joystick_pressed")
 
     assert(err == OK)
 
     if Input.get_connected_joypads().size() != 0:
-        $LeftJoystick.hide()
-        $RightJoystick.hide()
+        $"%LeftJoystick".hide()
+        $"%RightJoystick".hide()
 
 func _get_linear_input() -> Vector3:
     return Vector3(

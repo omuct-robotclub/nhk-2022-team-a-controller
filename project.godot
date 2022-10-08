@@ -39,6 +39,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://scripts/rosbridge.gd"
 }, {
+"base": "Container",
+"class": "ScrollTabContainer",
+"language": "GDScript",
+"path": "res://scripts/scroll_tab_container.gd"
+}, {
 "base": "Sprite",
 "class": "Spot",
 "language": "GDScript",
@@ -71,6 +76,7 @@ _global_script_class_icons={
 "Robot": "",
 "RobotVisualizer": "",
 "RosBridge": "",
+"ScrollTabContainer": "",
 "Spot": "",
 "TFFrame": "",
 "Transport": "",
