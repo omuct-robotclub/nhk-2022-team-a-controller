@@ -36,8 +36,8 @@ jobs:
       - name: create keystore file
         id: create_keystore_file
         run: |
-          echo ${{ secrets.DEBUG_KEYSTORE_BASE64 }} | base64 --decode > /root/debug.keystore
-          sed 's@keystore/release=".*"@keystore/release="'/root/debug.keystore'"@g' -i export_presets.cfg
+          echo ${{ secrets.DEBUG_KEYSTORE_BASE64 }} | base64 --decode > /tmp/debug.keystore
+          sed 's@keystore/release=".*"@keystore/release="'/tmp/debug.keystore'"@g' -i export_presets.cfg
 
       - name: export_app
         id: export
