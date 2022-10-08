@@ -63,7 +63,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           generate_release_notes: true
           tag_name: ${{ steps.tag_version.outputs.TAG_VERSION }}
-          files: ${{ steps.export.outputs.build_directory }}/*
+          files: ${{ steps.export.outputs.build_directory }}/*/*
   # job id, can be anything
   # do_export:
   #   # Always use ubuntu-latest for this action
