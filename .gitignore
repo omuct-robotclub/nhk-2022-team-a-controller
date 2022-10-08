@@ -15,3 +15,6 @@ data_*/
 .envrc
 .direnv
 
+# gut
+.gut_editor_config.json
+.gut_editor_shortcuts.cfg
