@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scenes/pid_control.tscn" type="PackedScene" id=1]
+
+[node name="PidControlPanel" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 593.0
+
+[node name="PidControl" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_right = 1010.0
+margin_bottom = 88.0
+pid_name = "dw0"
+
+[node name="PidControl2" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 92.0
+margin_right = 1010.0
+margin_bottom = 180.0
+pid_name = "dw1"
+
+[node name="PidControl3" parent="VBoxContainer" instance=ExtResource( 1 )]
+margin_top = 184.0
+margin_right = 1010.0
+margin_bottom = 272.0
+pid_name = "dw2"

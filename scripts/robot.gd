@@ -30,6 +30,8 @@ var rotation: float setget, get_rotation
 var control_mode: int = ControlMode.MANUAL setget ,get_control_mode
 var _rud_param_event_handler := rosbridge.create_parameter_event_handler("/rud_controller_node", funcref(self, "_on_rud_param_changed"))
 var _param_event_handler := rosbridge.create_parameter_event_handler("/nhka_hardware_node", funcref(self, "_on_param_changed"))
+var _drive_wheels: Array
+var _pids: Dictionary
 
 class Launcher extends Reference:
     var _robot: Robot
@@ -94,15 +96,54 @@ class Loader extends Reference:
         })
 
 
+class PidController extends Reference:
+    var _robo: Robot
+    var _name: String
+
+    var kp: RosBridge.Parameter setget ,get_kp
+    var ki: RosBridge.Parameter setget ,get_ki
+    var kd: RosBridge.Parameter setget ,get_kd
+
+    func _init(robo: Robot, node: String, param_base: String) -> void:
+        _robo = robo
+        _name = param_base
+        kp = rosbridge.create_parameter_wrapper(node, _name + ".p", 0.0)
+        ki = rosbridge.create_parameter_wrapper(node, _name + ".i", 0.0)
+        kd = rosbridge.create_parameter_wrapper(node, _name + ".d", 0.0)
+
+    func get_kp() -> RosBridge.Parameter: return kp
+    func get_ki() -> RosBridge.Parameter: return ki
+    func get_kd() -> RosBridge.Parameter: return kd
+
+
+class DriveWheel extends Reference:
+    var _robo: Robot
+    var pid: PidController setget ,get_pid
+
+    func _init(robo: Robot, wheel_name: String) -> void:
+        _robo = robo
+        pid = PidController.new(robo, "/nhka_hardware_node", wheel_name)
+
+    func get_pid() -> PidController: return pid
+
+
 func _init() -> void:
     _launchers =  [Launcher.new(self, 0), Launcher.new(self, 1), Launcher.new(self, 2)]
     _loaders = [Loader.new(self, 0), Loader.new(self, 1), Loader.new(self, 2)]
+    _drive_wheels = [DriveWheel.new(self, "dw0"), DriveWheel.new(self, "dw1"), DriveWheel.new(self, "dw2")]
+    _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid,}
 
 func get_launcher(idx: int) -> Launcher:
     return _launchers[idx]
 
 func get_loader(idx: int) -> Loader:
     return _loaders[idx]
+
+func get_drive_wheel(idx: int) -> DriveWheel:
+    return _drive_wheels[idx]
+
+func get_pid(n: String) -> PidController:
+    return _pids[n]
 
 func _loader_state_cb(msg: Dictionary) -> void:
     for loader_idx in 3:

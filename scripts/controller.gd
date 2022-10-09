@@ -10,11 +10,16 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
     var now := OS.get_ticks_msec()
-    if (now - _last_twist_publish_time) < (1 / twist_publish_rate): return
+    if ((now - _last_twist_publish_time)/1000.0) < (1 / twist_publish_rate): return
 
-    var linear := Input.get_vector("backward", "forward", "right", "left")
+    var linear := Vector2(Input.get_axis("backward", "forward"), Input.get_axis("right", "left"))
     var angular := Input.get_axis("turn_right", "turn_left")
-    if linear.length() < linear_deadzone or abs(angular) < angular_deadzone:
+
+    if robot.control_mode == Robot.ControlMode.MANUAL:
+        robot.set_velocity(linear, angular)
+        _last_twist_publish_time = now
+        print(linear)
+    elif linear.length() > linear_deadzone or abs(angular) > angular_deadzone:
         robot.set_velocity(linear, angular)
         _last_twist_publish_time = now
 
