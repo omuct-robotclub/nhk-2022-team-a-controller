@@ -23,12 +23,13 @@ var distance: float setget ,get_distance
 onready var _robot_pose_sub := rosbridge.create_subscription("geometry_msgs/Pose2D", "/robot_pose", funcref(self, "_pose_callback"))
 onready var _goal_pub := rosbridge.create_publisher("geometry_msgs/PoseStamped", "/goal_pose")
 onready var _twist_pub = rosbridge.create_publisher("geometry_msgs/Twist", "/cmd_vel")
+onready var _enable_control := rosbridge.create_parameter_wrapper("/rud_controller_node", "enable_control", false)
 var _launchers: Array
 var _loaders: Array
 var position: Vector2 setget ,get_position
 var rotation: float setget, get_rotation
 var control_mode: int = ControlMode.MANUAL setget ,get_control_mode
-var _rud_param_event_handler := rosbridge.create_parameter_event_handler("/rud_controller_node", funcref(self, "_on_rud_param_changed"))
+#var _rud_param_event_handler := rosbridge.create_parameter_event_handler("/rud_controller_node", funcref(self, "_on_rud_param_changed"))
 var _param_event_handler := rosbridge.create_parameter_event_handler("/nhka_hardware_node", funcref(self, "_on_param_changed"))
 var _drive_wheels: Array
 var _pids: Dictionary
@@ -133,6 +134,14 @@ func _init() -> void:
     _drive_wheels = [DriveWheel.new(self, "dw0"), DriveWheel.new(self, "dw1"), DriveWheel.new(self, "dw2")]
     _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid,}
 
+func _ready() -> void:
+    var err := _enable_control.connect("value_updated", self, "_on_enable_control_updated")
+    assert(err == OK)
+
+func _on_enable_control_updated(new_value: bool) -> void:
+    control_mode = ControlMode.AUTO if new_value else ControlMode.MANUAL
+    emit_signal("control_mode_changed", control_mode)
+
 func get_launcher(idx: int) -> Launcher:
     return _launchers[idx]
 
@@ -177,6 +186,7 @@ func get_control_mode() -> int:
 
 func set_control_mode(mode: int) -> void:
     control_mode = mode
+    print(mode)
     var enable_control: bool
     match mode:
         ControlMode.AUTO:
@@ -185,15 +195,11 @@ func set_control_mode(mode: int) -> void:
             enable_control = false
         _:
             assert(false)
-
-    yield(rosbridge.set_parameter("/rud_controller_node",
-                                  "enable_control",
-                                  enable_control),
-          "completed")
+    yield(_enable_control.set_value(enable_control), "completed")
 
 func move_to(pos: Vector2, rot: float) -> void:
     print("moving to ", pos, " ", rot)
-    set_control_mode(ControlMode.AUTO)
+    yield(set_control_mode(ControlMode.AUTO), "completed")
     var ori = Quat(Vector3(0, 0, 1), rot)
     var msg = {
         "header": { "frame_id": "map" },
@@ -217,7 +223,7 @@ func move_to(pos: Vector2, rot: float) -> void:
 
 func set_velocity(linear: Vector2, angular: float) -> void:
     if control_mode == ControlMode.AUTO:
-        set_control_mode(ControlMode.MANUAL)
+        yield(set_control_mode(ControlMode.MANUAL), "completed")
 
     var msg = {
         "linear": {
@@ -233,13 +239,13 @@ func set_velocity(linear: Vector2, angular: float) -> void:
     }
     _twist_pub.publish(msg)
 
-func _on_rud_param_changed(name: String, value) -> void:
-    match name:
-        "enable_control":
-            var prev := control_mode
-            if value:
-                control_mode = ControlMode.AUTO
-            else:
-                control_mode = ControlMode.MANUAL
-            if prev != control_mode:
-                emit_signal("control_mode_changed", control_mode)
+#func _on_rud_param_changed(name: String, value) -> void:
+#    match name:
+#        "enable_control":
+#            var prev := control_mode
+#            if value:
+#                control_mode = ControlMode.AUTO
+#            else:
+#                control_mode = ControlMode.MANUAL
+#            if prev != control_mode:
+#                emit_signal("control_mode_changed", control_mode)

@@ -18,7 +18,7 @@ func _ready():
         $"%RightJoystick".hide()
 
 func _on_joystick_pressed():
-    robot.control_mode = Robot.ControlMode.MANUAL
+    robot.set_control_mode(Robot.ControlMode.MANUAL)
 
 func _on_joy_connection_changed(device_id: int, connected: bool) -> void:
     if connected:

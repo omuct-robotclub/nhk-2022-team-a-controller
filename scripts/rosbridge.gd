@@ -322,7 +322,7 @@ class Parameter extends Reference:
         return _value
 
     func set_value(value):
-        _br.set_parameter(_node_name, _param_name, value)
+        yield(_br.set_parameter(_node_name, _param_name, value), "completed")
 
 func create_parameter_wrapper(node_name: String, param_name: String, default) -> Parameter:
     var result := Parameter.new(self, node_name, param_name, default)
