@@ -17,9 +17,9 @@ margin_right = 1010.0
 margin_bottom = 192.0
 size_flags_vertical = 3
 pid_name = "dw0"
-kp_max = 10.0
+kp_max = 2.0
 ki_max = 20.0
-kd_max = 10.0
+kd_max = 2.0
 
 [node name="dw1" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 196.0
@@ -27,9 +27,9 @@ margin_right = 1010.0
 margin_bottom = 389.0
 size_flags_vertical = 3
 pid_name = "dw1"
-kp_max = 10.0
+kp_max = 2.0
 ki_max = 20.0
-kd_max = 10.0
+kd_max = 2.0
 
 [node name="dw2" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_top = 393.0
@@ -37,6 +37,6 @@ margin_right = 1010.0
 margin_bottom = 586.0
 size_flags_vertical = 3
 pid_name = "dw2"
-kp_max = 10.0
+kp_max = 2.0
 ki_max = 20.0
-kd_max = 10.0
+kd_max = 2.0
