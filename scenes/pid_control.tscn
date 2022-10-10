@@ -25,15 +25,19 @@ unique_name_in_owner = true
 margin_top = 18.0
 margin_bottom = 34.0
 rect_pivot_offset = Vector2( -343, -55 )
+text = "p"
 
 [node name="IGain" parent="VBoxContainer" instance=ExtResource( 1 )]
 unique_name_in_owner = true
 margin_top = 38.0
 margin_bottom = 54.0
 rect_pivot_offset = Vector2( -343, -71 )
+text = "I"
+max_value = 20.0
 
 [node name="DGain" parent="VBoxContainer" instance=ExtResource( 1 )]
 unique_name_in_owner = true
 margin_top = 58.0
 margin_bottom = 74.0
 rect_pivot_offset = Vector2( -343, -71 )
+text = "D"

@@ -17,6 +17,7 @@ onready var _reload_button := $"%ReloadButton"
 onready var _name := $"%Name"
 onready var _status := $"%Status"
 
+
 func _ready():
     _ammo_indicator.value = max_ammo
     var err := _ammo_indicator.connect("submit", self, "_on_ammo_indicator_submit")
@@ -29,6 +30,7 @@ func _ready():
     tim.autostart = true
     add_child(tim)
     assert(err == OK)
+    _name.text = loader_name
 
 
 func set_loader_name(name: String):
@@ -61,11 +63,11 @@ func _loader_state_cb(msg: Dictionary):
 func _on_ammo_indicator_submit(n_ammo: int):
     if _notify_reload_cli == null: return
 
-    _notify_reload_cli.call_service({
+    yield(_notify_reload_cli.call_service({
         "loader_idx": loader_idx,
         "ammo_left": n_ammo,
-        "chamber_state": $"%AmmoIndicator".chamber_state
-    })
+        "chamber_state": 1 if $"%AmmoIndicator".chamber_state else 0
+    }), "completed")
 
 func _on_auto_reload_pressed():
     robot.get_loader(loader_idx).auto_reload = _auto_reload.pressed
@@ -75,6 +77,6 @@ func _update_auto_reload() -> void:
 
 func _on_reload_button_pressed():
     if _reload_cli != null:
-        _reload_cli.call_service({
+        yield(_reload_cli.call_service({
             "loader_idx": loader_idx
-        })
+        }), "completed")

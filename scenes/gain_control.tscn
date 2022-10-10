@@ -8,13 +8,21 @@ margin_bottom = 16.0
 script = ExtResource( 1 )
 max_value = 10.0
 
+[node name="Name" type="Label" parent="."]
+unique_name_in_owner = true
+margin_top = 1.0
+margin_right = 50.0
+margin_bottom = 15.0
+rect_min_size = Vector2( 50, 0 )
+
 [node name="Slider" type="HSlider" parent="."]
 unique_name_in_owner = true
+margin_left = 54.0
 margin_right = 956.0
 margin_bottom = 16.0
 size_flags_horizontal = 3
 max_value = 10.0
-step = 0.1
+step = 0.0
 tick_count = 10
 ticks_on_borders = true
 
@@ -25,4 +33,5 @@ margin_top = 1.0
 margin_right = 1010.0
 margin_bottom = 15.0
 rect_min_size = Vector2( 50, 0 )
+text = "0.00"
 align = 2
