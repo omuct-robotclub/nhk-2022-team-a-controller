@@ -33,6 +33,7 @@ var control_mode: int = ControlMode.MANUAL setget ,get_control_mode
 var _param_event_handler := rosbridge.create_parameter_event_handler("/nhka_hardware_node", funcref(self, "_on_param_changed"))
 var _drive_wheels: Array
 var _pids: Dictionary
+var _rud: RudController
 
 class Launcher extends Reference:
     var _robot: Robot
@@ -128,11 +129,23 @@ class DriveWheel extends Reference:
     func get_pid() -> PidController: return pid
 
 
+class RudController extends Reference:
+    var pid_x: PidController
+    var pid_y: PidController
+    var pid_yaw: PidController
+
+    func _init(robo: Robot) -> void:
+        pid_x = PidController.new(robot, "/rud_controller_node", "pid_x")
+        pid_y = PidController.new(robot, "/rud_controller_node", "pid_y")
+        pid_yaw = PidController.new(robot, "/rud_controller_node", "pid_angular")
+
+
 func _init() -> void:
     _launchers =  [Launcher.new(self, 0), Launcher.new(self, 1), Launcher.new(self, 2)]
     _loaders = [Loader.new(self, 0), Loader.new(self, 1), Loader.new(self, 2)]
     _drive_wheels = [DriveWheel.new(self, "dw0"), DriveWheel.new(self, "dw1"), DriveWheel.new(self, "dw2")]
-    _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid,}
+    _rud = RudController.new(self)
+    _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid, "x": _rud.pid_x, "y": _rud.pid_y, "yaw": _rud.pid_yaw,}
 
 func _ready() -> void:
     var err := _enable_control.connect("value_updated", self, "_on_enable_control_updated")
