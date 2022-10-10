@@ -14,17 +14,20 @@ margin_bottom = 593.0
 
 [node name="PidControl" parent="VBoxContainer" instance=ExtResource( 1 )]
 margin_right = 1010.0
-margin_bottom = 88.0
+margin_bottom = 192.0
+size_flags_vertical = 3
 pid_name = "dw0"
 
 [node name="PidControl2" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 92.0
+margin_top = 196.0
 margin_right = 1010.0
-margin_bottom = 180.0
+margin_bottom = 389.0
+size_flags_vertical = 3
 pid_name = "dw1"
 
 [node name="PidControl3" parent="VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 184.0
+margin_top = 393.0
 margin_right = 1010.0
-margin_bottom = 272.0
+margin_bottom = 586.0
+size_flags_vertical = 3
 pid_name = "dw2"

@@ -47,12 +47,16 @@ func _close():
 
 func _toggle():
     if _is_opened:
-        _open()
-    else:
         _close()
+    else:
+        _open()
 
 func _on_tab_pressed(idx: int) -> void:
     for btn in _tabs.get_children():
         btn.flat = false
     _tabs.get_child(idx).flat = true
     _tab_container.current_tab = idx
+
+func _input(event: InputEvent) -> void:
+    if Input.is_action_just_released("toggle_open"):
+        _toggle()
