@@ -20,18 +20,26 @@ unique_name_in_owner = true
 margin_right = 1010.0
 margin_bottom = 14.0
 
-[node name="PGain" parent="VBoxContainer" instance=ExtResource( 1 )]
+[node name="FFGain" parent="VBoxContainer" instance=ExtResource( 1 )]
 unique_name_in_owner = true
 margin_top = 18.0
-margin_bottom = 204.0
+margin_bottom = 157.0
+rect_pivot_offset = Vector2( -343, -55 )
+size_flags_vertical = 3
+text = "FF"
+
+[node name="PGain" parent="VBoxContainer" instance=ExtResource( 1 )]
+unique_name_in_owner = true
+margin_top = 161.0
+margin_bottom = 300.0
 rect_pivot_offset = Vector2( -343, -55 )
 size_flags_vertical = 3
 text = "p"
 
 [node name="IGain" parent="VBoxContainer" instance=ExtResource( 1 )]
 unique_name_in_owner = true
-margin_top = 208.0
-margin_bottom = 395.0
+margin_top = 304.0
+margin_bottom = 443.0
 rect_pivot_offset = Vector2( -343, -71 )
 size_flags_vertical = 3
 text = "I"
@@ -39,7 +47,7 @@ max_value = 20.0
 
 [node name="DGain" parent="VBoxContainer" instance=ExtResource( 1 )]
 unique_name_in_owner = true
-margin_top = 399.0
+margin_top = 447.0
 margin_bottom = 586.0
 rect_pivot_offset = Vector2( -343, -71 )
 size_flags_vertical = 3

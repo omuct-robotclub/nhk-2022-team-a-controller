@@ -102,6 +102,7 @@ class PidController extends Reference:
     var _robo: Robot
     var _name: String
 
+    var ff: RosBridge.Parameter setget ,get_ff
     var kp: RosBridge.Parameter setget ,get_kp
     var ki: RosBridge.Parameter setget ,get_ki
     var kd: RosBridge.Parameter setget ,get_kd
@@ -109,6 +110,7 @@ class PidController extends Reference:
     func _init(robo: Robot, node: String, param_base: String) -> void:
         _robo = robo
         _name = param_base
+        ff = rosbridge.create_parameter_wrapper(node, _name + ".ff", 0.0)
         kp = rosbridge.create_parameter_wrapper(node, _name + ".p", 0.0)
         ki = rosbridge.create_parameter_wrapper(node, _name + ".i", 0.0)
         kd = rosbridge.create_parameter_wrapper(node, _name + ".d", 0.0)
@@ -116,6 +118,7 @@ class PidController extends Reference:
     func get_kp() -> RosBridge.Parameter: return kp
     func get_ki() -> RosBridge.Parameter: return ki
     func get_kd() -> RosBridge.Parameter: return kd
+    func get_ff() -> RosBridge.Parameter: return ff
 
 
 class DriveWheel extends Reference:
