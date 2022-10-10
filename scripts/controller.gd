@@ -18,16 +18,15 @@ func _process(_delta: float) -> void:
     if robot.control_mode == Robot.ControlMode.MANUAL:
         robot.set_velocity(linear, angular)
         _last_twist_publish_time = now
-        print(linear)
     elif linear.length() > linear_deadzone or abs(angular) > angular_deadzone:
         robot.set_velocity(linear, angular)
         _last_twist_publish_time = now
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("step_turn_left"):
-        robot.move_to(robot.position, robot.rotation - deg2rad(0.5))
-    if Input.is_action_just_pressed("step_turn_right"):
         robot.move_to(robot.position, robot.rotation + deg2rad(0.5))
+    if Input.is_action_just_pressed("step_turn_right"):
+        robot.move_to(robot.position, robot.rotation - deg2rad(0.5))
 
     if Input.is_action_pressed("reload_mod"):
         if Input.is_action_just_pressed("fire_0"):
