@@ -15,6 +15,13 @@ func _process(_delta: float) -> void:
     var linear := Vector2(Input.get_axis("backward", "forward"), Input.get_axis("right", "left"))
     var angular := Input.get_axis("turn_right", "turn_left")
 
+    linear.x *= abs(linear.x)
+    linear.y *= abs(linear.y)
+    linear *= 2
+
+    angular *= abs(angular)
+    angular *= 2
+
     if robot.control_mode == Robot.ControlMode.MANUAL:
         robot.set_velocity(linear, angular)
         _last_twist_publish_time = now
