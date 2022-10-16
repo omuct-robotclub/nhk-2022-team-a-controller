@@ -24,6 +24,7 @@ onready var _robot_pose_sub := rosbridge.create_subscription("geometry_msgs/Pose
 onready var _goal_pub := rosbridge.create_publisher("geometry_msgs/PoseStamped", "/goal_pose")
 onready var _twist_pub = rosbridge.create_publisher("geometry_msgs/Twist", "/cmd_vel")
 onready var _enable_control := rosbridge.create_parameter_wrapper("/rud_controller_node", "enable_control", false)
+onready var _launcher_spec_sub := rosbridge.create_subscription("launcher_interfaces/LauncherSpecArray", "/launcher_specs", funcref(self, "_launcher_spec_callback"))
 var _launchers: Array
 var _loaders: Array
 var position: Vector2 setget ,get_position
@@ -36,12 +37,22 @@ var _pids: Dictionary
 var _rud: RudController
 
 class Launcher extends Reference:
+    class Spec extends Reference:
+        var launcher_name: String
+        var loaders: Array
+        var compatible_spot_types: Array
+        var landing_point: Vector2
+        var position: Vector2
+        var rotation: float
+
     var _robot: Robot
     var _idx: int
+    var _spec: Spec
 
     func _init(robo: Robot, idx: int) -> void:
         _idx = idx
         _robot = robo
+        _spec = Spec.new()
 
     func launch() -> void:
         var result = yield(_robot._launch_client.call_service({ "index": _idx }), "completed")
@@ -254,6 +265,17 @@ func set_velocity(linear: Vector2, angular: float) -> void:
         },
     }
     _twist_pub.publish(msg)
+
+func _launcher_spec_callback(msg: Dictionary) -> void:
+    for i in _launchers.size():
+        var s = msg["specs"][i]
+        var l = get_launcher(i)
+        l._spec.launcher_name = s["name"]
+        l._spec.loaders = s["loaders"]
+        l._spec.compatible_spot_types = s["compatible_spot_types"]
+        l._spec.landing_point = Vector2(s["landing_point"]["x"], s["landing_point"]["y"])
+        l._spec.position = Vector2(s["pose"]["x"], s["pose"]["y"])
+        l._spec.rotation = s["pose"]["theta"]
 
 #func _on_rud_param_changed(name: String, value) -> void:
 #    match name:

@@ -4,7 +4,7 @@
 [ext_resource path="res://scripts/visualizers/spot.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 750, 750 )
+extents = Vector2( 0, 0 )
 
 [node name="Runway" type="Sprite"]
 scale = Vector2( 0.001, 0.001 )

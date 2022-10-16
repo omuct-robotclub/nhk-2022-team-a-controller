@@ -42,7 +42,8 @@ func _unhandled_input(event) -> void:
         _touch_pos = get_global_transform().affine_inverse() * get_canvas_transform().affine_inverse() * event.position
         var touch_angle = (_touch_pos - _spot.position).angle()
         if not _has_touched:
-            _touch_angle_offset = -touch_angle - PI / 2
+            _touch_angle_offset = 0.0
+#            _touch_angle_offset = -touch_angle - PI / 2
         var launcher_angle = touch_angle + _touch_angle_offset
         _launcher_pos = Vector2(1.0, 0.0).rotated(launcher_angle) * _distance_between_launcher_and_spot + _spot.position
         _robot_angle = PI + launcher_angle - _launcher["pose"]["theta"]

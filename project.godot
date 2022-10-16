@@ -9,6 +9,11 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "Node",
+"class": "Field",
+"language": "GDScript",
+"path": "res://scripts/field.gd"
+}, {
 "base": "Reference",
 "class": "GutHookScript",
 "language": "GDScript",
@@ -70,6 +75,7 @@ _global_script_classes=[ {
 "path": "res://scripts/visualizers/waypoint.gd"
 } ]
 _global_script_class_icons={
+"Field": "",
 "GutHookScript": "",
 "GutTest": "",
 "LaunchPositionSelector": "",
@@ -96,6 +102,7 @@ config/icon="res://icon.png"
 rosbridge="*res://scripts/rosbridge.gd"
 Globals="*res://scripts/globals.gd"
 robot="*res://scripts/robot.gd"
+field="*res://scripts/field.gd"
 
 [display]
 
@@ -239,6 +246,11 @@ step_turn_right={
 reload_mod={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
+ ]
+}
+look_at_mod={
+"deadzone": 0.5,
+"events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
 

@@ -42,6 +42,13 @@ func _input(_event: InputEvent) -> void:
             robot.get_loader(1).reload()
         elif Input.is_action_just_pressed("fire_2"):
             robot.get_loader(2).reload()
+    elif Input.is_action_pressed("look_at_mod"):
+        if Input.is_action_just_pressed("fire_0"):
+            pass
+        elif Input.is_action_just_pressed("fire_1"):
+            pass
+        elif Input.is_action_just_pressed("fire_2"):
+            pass
     else:
         if Input.is_action_just_pressed("fire_0"):
             robot.get_launcher(0).launch()
