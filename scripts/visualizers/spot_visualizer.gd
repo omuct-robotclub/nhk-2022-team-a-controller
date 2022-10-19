@@ -61,7 +61,7 @@ func _create_popup(position: Vector2, spot_idx: int) -> void:
             compatible_launchers.push_back(launcher)
 
     var menu := PopupMenu.new()
-    menu.rect_scale *= 2.0
+    menu.rect_scale *= 4.0
     for launcher in compatible_launchers:
         menu.add_item(launcher["name"])
     var err := menu.connect("index_pressed", self, "_on_menu_index_pressed", [spot, compatible_launchers, menu])
