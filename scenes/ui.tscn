@@ -212,7 +212,7 @@ margin_top = 600.0
 margin_bottom = 600.0
 
 [node name="Timer" parent="." instance=ExtResource( 9 )]
-margin_left = 31.0
-margin_top = 129.0
-margin_right = -929.0
-margin_bottom = -431.0
+margin_left = 887.0
+margin_top = 257.0
+margin_right = -9.0
+margin_bottom = -295.0
