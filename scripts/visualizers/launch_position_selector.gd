@@ -75,12 +75,12 @@ func _draw() -> void:
     draw_arc(_spot.position, _distance_between_launcher_and_spot, 0.0, TAU, 100, color, 1, true)
 
     if _spot.has_angle_limit:
-        draw_line(_spot.position, _spot.position + Vector2(1.0, 0.0).rotated(_spot.angle_min + _spot.rotation) * _distance_between_launcher_and_spot, alt_color)
-        draw_line(_spot.position, _spot.position + Vector2(1.0, 0.0).rotated(_spot.angle_max + _spot.rotation) * _distance_between_launcher_and_spot, alt_color)
+        draw_line(_spot.position, _spot.position + Vector2(1.0, 0.0).rotated(_spot.angle_min + _spot.rotation) * _distance_between_launcher_and_spot, alt_color, 1.0, true)
+        draw_line(_spot.position, _spot.position + Vector2(1.0, 0.0).rotated(_spot.angle_max + _spot.rotation) * _distance_between_launcher_and_spot, alt_color, 1.0, true)
 
     if not _has_touched: return
 
-    draw_line(_spot.position, _launcher_pos, color)
+    draw_line(_spot.position, _launcher_pos, color, 1.0, true)
 
     draw_set_transform(_robot_pos, _robot_angle, Vector2(1.0, 1.0))
     draw_rect(_robot_rect, Color.aqua, false, 1.0, true)
