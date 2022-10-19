@@ -45,6 +45,8 @@ func _unhandled_input(event) -> void:
             _touch_angle_offset = 0.0
 #            _touch_angle_offset = -touch_angle - PI / 2
         var launcher_angle = touch_angle + _touch_angle_offset
+        if _spot.has_angle_limit:
+            launcher_angle = clamp(launcher_angle, _spot.angle_min + _spot.rotation, _spot.angle_max + _spot.rotation)
         _launcher_pos = Vector2(1.0, 0.0).rotated(launcher_angle) * _distance_between_launcher_and_spot + _spot.position
         _robot_angle = PI + launcher_angle - _launcher["pose"]["theta"]
         _robot_pos = _launcher_pos - _launcher_offset.rotated(_robot_angle)
