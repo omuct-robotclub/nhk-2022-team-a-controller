@@ -10,7 +10,9 @@ var _selected_launcher: int = -1
 signal launcher_selected()
 
 func _ready() -> void:
-    pass
+    var res := robot.get_loader(0).connect("state_changed", self, "_on_loader_state_changed", [0])
+    res = res || robot.get_loader(2).connect("state_changed", self, "_on_loader_state_changed", [2])
+    assert(res == OK)
 
 func _process(_delta: float) -> void:
     var now := OS.get_ticks_msec()
@@ -37,6 +39,11 @@ func _feedback() -> void:
     for i in Input.get_connected_joypads():
         Input.start_joy_vibration(i, 1, 0, 0.1)
     Input.vibrate_handheld(50)
+
+func _on_loader_state_changed(idx: int) -> void:
+    var l = robot.get_loader(idx)
+    if l.get_is_ready() and Input.is_action_pressed("fire") and _selected_launcher == idx:
+        robot.get_launcher(idx).launch()
 
 func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("step_turn_left"):

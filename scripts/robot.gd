@@ -148,7 +148,7 @@ class RudController extends Reference:
     var pid_y: PidController
     var pid_yaw: PidController
 
-    func _init(robo: Robot) -> void:
+    func _init(_robo: Robot) -> void:
         pid_x = PidController.new(robot, "/rud_controller_node", "pid_x")
         pid_y = PidController.new(robot, "/rud_controller_node", "pid_y")
         pid_yaw = PidController.new(robot, "/rud_controller_node", "pid_angular")

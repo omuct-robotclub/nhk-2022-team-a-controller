@@ -57,6 +57,6 @@ func _on_tab_pressed(idx: int) -> void:
     _tabs.get_child(idx).flat = true
     _tab_container.current_tab = idx
 
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
     if Input.is_action_just_released("toggle_open"):
         _toggle()
