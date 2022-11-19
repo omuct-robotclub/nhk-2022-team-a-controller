@@ -77,13 +77,67 @@ margin_right = 157.0
 margin_bottom = 19.0
 text = "Unknown"
 
+[node name="LauncherController" type="Control" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -144.0
+script = ExtResource( 5 )
+
+[node name="ExpandButton" type="Button" parent="LauncherController"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -152.0
+margin_bottom = 64.0
+text = "Launchers"
+
+[node name="Launchers" type="HBoxContainer" parent="LauncherController"]
+visible = false
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -794.0
+margin_bottom = 65.0
+
+[node name="Fire1" type="Button" parent="LauncherController/Launchers"]
+margin_right = 155.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Left"
+
+[node name="Fire2" type="Button" parent="LauncherController/Launchers"]
+margin_left = 159.0
+margin_right = 315.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Center"
+
+[node name="Fire3" type="Button" parent="LauncherController/Launchers"]
+margin_left = 319.0
+margin_right = 474.0
+margin_bottom = 65.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+text = "Right"
+
+[node name="DeployButton" type="CheckButton" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -153.0
+margin_top = 73.0
+margin_right = -2.0
+margin_bottom = 137.0
+shortcut = SubResource( 2 )
+text = "Deploy"
+script = ExtResource( 6 )
+
 [node name="PositionIndicator" type="VBoxContainer" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -105.0
-margin_top = 129.0
+margin_top = 145.0
 margin_right = -17.0
-margin_bottom = 179.0
+margin_bottom = 195.0
 mouse_filter = 2
 script = ExtResource( 8 )
 
@@ -143,66 +197,12 @@ size_flags_horizontal = 3
 text = "0.0"
 align = 2
 
-[node name="LauncherController" type="Control" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -144.0
-script = ExtResource( 5 )
-
-[node name="ExpandButton" type="Button" parent="LauncherController"]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -152.0
-margin_bottom = 64.0
-text = "Launchers"
-
-[node name="Launchers" type="HBoxContainer" parent="LauncherController"]
-visible = false
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -794.0
-margin_bottom = 65.0
-
-[node name="Fire1" type="Button" parent="LauncherController/Launchers"]
-margin_right = 155.0
-margin_bottom = 65.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Left"
-
-[node name="Fire2" type="Button" parent="LauncherController/Launchers"]
-margin_left = 159.0
-margin_right = 315.0
-margin_bottom = 65.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Center"
-
-[node name="Fire3" type="Button" parent="LauncherController/Launchers"]
-margin_left = 319.0
-margin_right = 474.0
-margin_bottom = 65.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-text = "Right"
-
-[node name="DeployButton" type="CheckButton" parent="."]
-anchor_left = 1.0
-anchor_right = 1.0
-margin_left = -153.0
-margin_top = 57.0
-margin_right = -2.0
-margin_bottom = 121.0
-shortcut = SubResource( 2 )
-text = "Deploy"
-script = ExtResource( 6 )
-
 [node name="AdjustAngleButton" type="CheckButton" parent="."]
 anchor_left = 1.0
 anchor_right = 1.0
 margin_left = -161.0
-margin_top = 201.0
-margin_bottom = 241.0
+margin_top = 217.0
+margin_bottom = 257.0
 focus_mode = 0
 enabled_focus_mode = 0
 text = "Adjust Angle"
@@ -211,9 +211,9 @@ text = "Adjust Angle"
 anchor_left = 1.0
 anchor_bottom = 0.0
 margin_left = -137.0
-margin_top = 257.0
+margin_top = 273.0
 margin_right = -9.0
-margin_bottom = 305.0
+margin_bottom = 321.0
 
 [node name="ControlPanel" parent="." instance=ExtResource( 3 )]
 margin_top = 600.0
