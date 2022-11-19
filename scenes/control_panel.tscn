@@ -1,11 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/ui/bottom_panel_controller.gd" type="Script" id=1]
 [ext_resource path="res://images/expand_button.svg" type="Texture" id=2]
 [ext_resource path="res://scenes/loader_controller_panel.tscn" type="PackedScene" id=3]
 [ext_resource path="res://scripts/ui/scroll_tab_container.gd" type="Script" id=4]
-[ext_resource path="res://scenes/wheel_control_panel.tscn" type="PackedScene" id=5]
-[ext_resource path="res://scenes/rud_control_panel.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "OpenAnim"
@@ -98,7 +96,7 @@ size_flags_horizontal = 3
 size_flags_stretch_ratio = 2.87
 
 [node name="Button" type="Button" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer/Tabs"]
-margin_right = 289.0
+margin_right = 877.0
 margin_bottom = 49.0
 focus_mode = 0
 size_flags_horizontal = 3
@@ -107,6 +105,7 @@ text = "Loader"
 flat = true
 
 [node name="Button2" type="Button" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer/Tabs"]
+visible = false
 margin_left = 293.0
 margin_right = 583.0
 margin_bottom = 49.0
@@ -116,7 +115,8 @@ enabled_focus_mode = 0
 text = "Wheels"
 
 [node name="Button3" type="Button" parent="PanelContainer/MarginContainer/TabControlPanel/HBoxContainer/Tabs"]
-margin_left = 587.0
+visible = false
+margin_left = 440.0
 margin_right = 877.0
 margin_bottom = 49.0
 focus_mode = 0
@@ -159,11 +159,3 @@ margin_left = 0.0
 margin_top = 0.0
 margin_right = 1024.0
 margin_bottom = 551.0
-
-[node name="WheelControlPanel" parent="PanelContainer/MarginContainer/TabControlPanel/ScrollTabContainer" instance=ExtResource( 5 )]
-margin_left = 1124.0
-margin_right = 1124.0
-
-[node name="RudControlPanel" parent="PanelContainer/MarginContainer/TabControlPanel/ScrollTabContainer" instance=ExtResource( 6 )]
-margin_left = 2248.0
-margin_right = 2248.0

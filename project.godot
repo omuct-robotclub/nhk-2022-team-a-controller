@@ -103,6 +103,7 @@ rosbridge="*res://scripts/rosbridge.gd"
 Globals="*res://scripts/globals.gd"
 robot="*res://scripts/robot.gd"
 field="*res://scripts/field.gd"
+controller="*res://scripts/controller.gd"
 
 [display]
 
@@ -248,7 +249,7 @@ reload_mod={
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":4,"pressure":0.0,"pressed":false,"script":null)
  ]
 }
-look_at_mod={
+fire={
 "deadzone": 0.5,
 "events": [ Object(InputEventJoypadButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"button_index":5,"pressure":0.0,"pressed":false,"script":null)
  ]

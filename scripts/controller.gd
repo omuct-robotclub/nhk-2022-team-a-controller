@@ -5,6 +5,10 @@ export var angular_deadzone := 0.01
 export var twist_publish_rate := 30.0
 onready var _last_twist_publish_time := OS.get_ticks_msec()
 
+var _selected_launcher: int = -1
+
+signal launcher_selected()
+
 func _ready() -> void:
     pass
 
@@ -35,24 +39,25 @@ func _input(_event: InputEvent) -> void:
     if Input.is_action_just_pressed("step_turn_right"):
         robot.move_to(robot.position, robot.rotation - deg2rad(0.5))
 
-    if Input.is_action_pressed("reload_mod"):
-        if Input.is_action_just_pressed("fire_0"):
-            robot.get_loader(0).reload()
-        elif Input.is_action_just_pressed("fire_1"):
-            robot.get_loader(1).reload()
-        elif Input.is_action_just_pressed("fire_2"):
-            robot.get_loader(2).reload()
-    elif Input.is_action_pressed("look_at_mod"):
-        if Input.is_action_just_pressed("fire_0"):
-            pass
-        elif Input.is_action_just_pressed("fire_1"):
-            pass
-        elif Input.is_action_just_pressed("fire_2"):
-            pass
-    else:
-        if Input.is_action_just_pressed("fire_0"):
-            robot.get_launcher(0).launch()
-        elif Input.is_action_just_pressed("fire_1"):
-            robot.get_launcher(1).launch()
-        elif Input.is_action_just_pressed("fire_2"):
-            robot.get_launcher(2).launch()
+    if Input.is_action_just_pressed("fire_0"):
+        _selected_launcher = 0
+        emit_signal("launcher_selected")
+    elif Input.is_action_just_pressed("fire_1"):
+        _selected_launcher = 1
+        emit_signal("launcher_selected")
+    elif Input.is_action_just_pressed("fire_2"):
+        _selected_launcher = 2
+        emit_signal("launcher_selected")
+
+    if Input.is_action_just_pressed("reload_mod"):
+        if _selected_launcher != -1:
+            robot.get_loader(_selected_launcher).reload()
+
+    if Input.is_action_just_pressed("fire"):
+        if _selected_launcher != -1:
+            robot.get_launcher(_selected_launcher).launch()
+
+
+func get_selected_launcher() -> int:
+    return _selected_launcher
+

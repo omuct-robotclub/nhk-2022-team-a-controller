@@ -158,8 +158,8 @@ func _init() -> void:
     _launchers =  [Launcher.new(self, 0), Launcher.new(self, 1), Launcher.new(self, 2)]
     _loaders = [Loader.new(self, 0), Loader.new(self, 1), Loader.new(self, 2)]
     _drive_wheels = [DriveWheel.new(self, "dw0"), DriveWheel.new(self, "dw1"), DriveWheel.new(self, "dw2")]
-    _rud = RudController.new(self)
-    _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid, "x": _rud.pid_x, "y": _rud.pid_y, "yaw": _rud.pid_yaw,}
+    # _rud = RudController.new(self)
+    # _pids = {"dw0":_drive_wheels[0].pid, "dw1":_drive_wheels[1].pid, "dw2":_drive_wheels[2].pid, "x": _rud.pid_x, "y": _rud.pid_y, "yaw": _rud.pid_yaw,}
 
 func _ready() -> void:
     var err := _enable_control.connect("value_updated", self, "_on_enable_control_updated")
