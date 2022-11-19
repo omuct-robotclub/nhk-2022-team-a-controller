@@ -1,7 +1,6 @@
 extends Control
 
 
-var cli_: RosBridge.Client
 var launcher_buttons: Array
 
 
@@ -27,19 +26,5 @@ func _input(event):
             $Launchers.visible = false
             $ExpandButton.visible = true
 
-#    elif Input.is_action_just_released("fire_0"):
-#        _on_button_pressed(0)
-#    elif Input.is_action_just_released("fire_1"):
-#        _on_button_pressed(1)
-#    elif Input.is_action_just_released("fire_2"):
-#        _on_button_pressed(2)
-
-func _on_connection_established():
-    cli_ = rosbridge.create_client("/launch")
-
 func _on_button_pressed(btn_idx):
-    if cli_ == null: return
-
-    var result = yield(cli_.call_service({ "index": btn_idx }), "completed")
-
-    print(result)
+    robot.get_launcher(btn_idx).launch()
