@@ -5,8 +5,7 @@ var launcher_buttons: Array
 
 
 func _ready():
-    var err := rosbridge.connect("connection_established", self, "_on_connection_established")
-
+    var err := OK
     launcher_buttons = $Launchers.get_children()
     for i in launcher_buttons.size():
         err = err || launcher_buttons[i].connect("pressed", self, "_on_button_pressed", [i])
