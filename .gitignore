@@ -18,3 +18,5 @@ data_*/
 # gut
 .gut_editor_config.json
 .gut_editor_shortcuts.cfg
+
+/.vscode
